@@ -1,0 +1,4 @@
+repository "Project-Burning@tj_9ce2d893_15d0_4532_918e_ba56809fee2d@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
