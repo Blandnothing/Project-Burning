@@ -15,7 +15,7 @@ public class InventoryManager
             return instance; 
         }
     }
-    Dictionary<string, int> puzzleDictionary;  //存储拼图的字典，value的int类型暂为占位符
+    public Dictionary<string, int> puzzleDictionary;  //存储拼图的字典，value的int类型暂为占位符
     public InventoryManager()
     {
         Dictionary<string, int> localInventoryData=LocalPlayerInventoryDada.LoadInventoryData();     //读取本地存储的背包数据初始化
