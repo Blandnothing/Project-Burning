@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleEffect : MonoBehaviour
+public abstract class PuzzleEffect 
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum PuzzleType    //拼图效果的种类
     {
-        
+        Skill,
+        Buff
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public PuzzleType type;
+    public KeyCode keyCode;  //技能绑定的按键
+    public abstract void Effect();//技能执行的函数
 }

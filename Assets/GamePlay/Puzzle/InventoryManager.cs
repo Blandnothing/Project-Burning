@@ -28,4 +28,12 @@ public class InventoryManager
             puzzleDictionary=localInventoryData;
         }
     }
+    public void AddObject(string key,int value)
+    {
+        puzzleDictionary[key]=value;
+    }
+    public void SaveInventoryData()
+    {
+        LocalPlayerInventoryDada.SaveInventoryData(puzzleDictionary);
+    }
 }
