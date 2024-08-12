@@ -1,0 +1,503 @@
+
+game jam小人.png
+size: 3091,1497
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+上眼皮
+  rotate: true
+  xy: 3065, 865
+  size: 117, 24
+  orig: 239, 24
+  offset: 0, 0
+  index: -1
+伤心眉
+  rotate: false
+  xy: 2720, 5
+  size: 132, 28
+  orig: 248, 28
+  offset: 0, 0
+  index: -1
+发卡
+  rotate: false
+  xy: 2796, 849
+  size: 169, 133
+  orig: 169, 133
+  offset: 0, 0
+  index: -1
+发卡带子1
+  rotate: false
+  xy: 2982, 673
+  size: 77, 86
+  orig: 77, 86
+  offset: 0, 0
+  index: -1
+发卡带子2
+  rotate: false
+  xy: 2982, 761
+  size: 57, 124
+  orig: 57, 124
+  offset: 0, 0
+  index: -1
+受击嘴巴
+  rotate: false
+  xy: 3064, 308
+  size: 21, 18
+  orig: 157, 20
+  offset: 1, 1
+  index: -1
+受击眼睛1
+  rotate: true
+  xy: 3034, 483
+  size: 84, 55
+  orig: 87, 57
+  offset: 2, 1
+  index: -1
+受击眼睛2
+  rotate: true
+  xy: 3025, 220
+  size: 77, 25
+  orig: 79, 28
+  offset: 1, 1
+  index: -1
+右后发
+  rotate: false
+  xy: 2576, 33
+  size: 142, 261
+  orig: 142, 261
+  offset: 0, 0
+  index: -1
+右大腿
+  rotate: false
+  xy: 2866, 352
+  size: 71, 144
+  orig: 72, 144
+  offset: 1, 0
+  index: -1
+右大臂
+  rotate: false
+  xy: 2797, 206
+  size: 89, 92
+  orig: 89, 92
+  offset: 0, 0
+  index: -1
+右小腿
+  rotate: false
+  xy: 2907, 688
+  size: 73, 159
+  orig: 73, 159
+  offset: 0, 0
+  index: -1
+右小臂
+  rotate: false
+  xy: 2967, 887
+  size: 96, 95
+  orig: 96, 95
+  offset: 0, 0
+  index: -1
+右手掌
+  rotate: false
+  xy: 2973, 377
+  size: 72, 64
+  orig: 74, 66
+  offset: 1, 1
+  index: -1
+右手掌2
+  rotate: false
+  xy: 2965, 505
+  size: 67, 52
+  orig: 69, 54
+  offset: 1, 1
+  index: -1
+右鞋
+  rotate: true
+  xy: 2979, 299
+  size: 76, 68
+  orig: 76, 68
+  offset: 0, 0
+  index: -1
+后发1
+  rotate: false
+  xy: 2576, 520
+  size: 208, 364
+  orig: 215, 364
+  offset: 0, 0
+  index: -1
+后发2
+  rotate: false
+  xy: 2576, 886
+  size: 218, 359
+  orig: 226, 359
+  offset: 8, 0
+  index: -1
+呆毛
+  rotate: true
+  xy: 2720, 35
+  size: 121, 74
+  orig: 121, 74
+  offset: 0, 0
+  index: -1
+头发右前
+  rotate: false
+  xy: 2972, 1303
+  size: 109, 192
+  orig: 109, 192
+  offset: 0, 0
+  index: -1
+头发左前
+  rotate: false
+  xy: 2786, 648
+  size: 119, 199
+  orig: 119, 201
+  offset: 0, 2
+  index: -1
+左后发
+  rotate: false
+  xy: 2796, 984
+  size: 168, 261
+  orig: 168, 261
+  offset: 0, 0
+  index: -1
+左大腿 拷贝
+  rotate: true
+  xy: 2966, 984
+  size: 79, 120
+  orig: 79, 120
+  offset: 0, 0
+  index: -1
+左大臂
+  rotate: true
+  xy: 2797, 145
+  size: 59, 98
+  orig: 61, 100
+  offset: 1, 1
+  index: -1
+左小腿
+  rotate: false
+  xy: 2776, 349
+  size: 88, 147
+  orig: 88, 147
+  offset: 0, 0
+  index: -1
+左小臂
+  rotate: false
+  xy: 2796, 35
+  size: 71, 108
+  orig: 71, 108
+  offset: 0, 0
+  index: -1
+左拳
+  rotate: false
+  xy: 2973, 443
+  size: 59, 60
+  orig: 61, 63
+  offset: 1, 2
+  index: -1
+左部风衣
+  rotate: true
+  xy: 2869, 31
+  size: 112, 66
+  orig: 113, 80
+  offset: 1, 0
+  index: -1
+左鞋
+  rotate: false
+  xy: 2953, 225
+  size: 70, 72
+  orig: 70, 72
+  offset: 0, 0
+  index: -1
+带子1
+  rotate: false
+  xy: 2966, 1065
+  size: 85, 130
+  orig: 100, 135
+  offset: 15, 5
+  index: -1
+带子2
+  rotate: false
+  xy: 2982, 1197
+  size: 107, 104
+  orig: 112, 104
+  offset: 5, 0
+  index: -1
+微笑嘴巴
+  rotate: false
+  xy: 2937, 31
+  size: 24, 10
+  orig: 26, 12
+  offset: 1, 1
+  index: -1
+微笑闭眼
+  rotate: false
+  xy: 2971, 11
+  size: 82, 18
+  orig: 84, 20
+  offset: 1, 1
+  index: -1
+手串
+  rotate: true
+  xy: 3064, 328
+  size: 51, 25
+  orig: 53, 27
+  offset: 1, 1
+  index: -1
+正常嘴巴
+  rotate: false
+  xy: 2953, 211
+  size: 64, 12
+  orig: 164, 12
+  offset: 0, 0
+  index: -1
+正常眉
+  rotate: false
+  xy: 2576, 5
+  size: 142, 26
+  orig: 256, 26
+  offset: 0, 0
+  index: -1
+正常眼上眼眶
+  rotate: true
+  xy: 2929, 503
+  size: 132, 34
+  orig: 265, 49
+  offset: 0, 15
+  index: -1
+正常眼下眼眶
+  rotate: false
+  xy: 2854, 2
+  size: 115, 27
+  orig: 252, 27
+  offset: 0, 0
+  index: -1
+正常眼眼珠
+  rotate: true
+  xy: 3022, 569
+  size: 102, 35
+  orig: 183, 35
+  offset: 0, 0
+  index: -1
+正常眼眼白
+  rotate: true
+  xy: 2939, 386
+  size: 115, 32
+  orig: 115, 32
+  offset: 0, 0
+  index: -1
+正常眼高光
+  rotate: true
+  xy: 3049, 301
+  size: 78, 13
+  orig: 78, 13
+  offset: 0, 0
+  index: -1
+正常脸部红晕
+  rotate: true
+  xy: 3053, 1078
+  size: 117, 35
+  orig: 117, 35
+  offset: 0, 0
+  index: -1
+正常闭眼嘴巴
+  rotate: true
+  xy: 3080, 464
+  size: 17, 9
+  orig: 19, 11
+  offset: 1, 1
+  index: -1
+正常闭眼眼部
+  rotate: true
+  xy: 3041, 768
+  size: 117, 19
+  orig: 120, 21
+  offset: 2, 1
+  index: -1
+武器
+  rotate: false
+  xy: 2576, 1247
+  size: 394, 248
+  orig: 394, 248
+  offset: 0, 0
+  index: -1
+玉
+  rotate: true
+  xy: 3052, 264
+  size: 35, 37
+  orig: 37, 40
+  offset: 1, 2
+  index: -1
+生气嘴巴
+  rotate: true
+  xy: 2786, 861
+  size: 23, 8
+  orig: 25, 11
+  offset: 1, 1
+  index: -1
+生气眉
+  rotate: true
+  xy: 3062, 738
+  size: 125, 27
+  orig: 242, 27
+  offset: 0, 0
+  index: -1
+生气眼睛高光
+  rotate: true
+  xy: 3017, 162
+  size: 47, 10
+  orig: 49, 12
+  offset: 1, 1
+  index: -1
+粉色带子
+  rotate: false
+  xy: 2776, 300
+  size: 113, 47
+  orig: 113, 47
+  offset: 0, 0
+  index: -1
+耳朵
+  rotate: true
+  xy: 3038, 174
+  size: 39, 51
+  orig: 41, 54
+  offset: 1, 2
+  index: -1
+耳环1
+  rotate: false
+  xy: 3029, 127
+  size: 45, 45
+  orig: 47, 47
+  offset: 1, 1
+  index: -1
+耳环2
+  rotate: false
+  xy: 2970, 163
+  size: 45, 46
+  orig: 47, 49
+  offset: 1, 2
+  index: -1
+背景
+  rotate: false
+  xy: 2, 11
+  size: 2572, 1484
+  orig: 2574, 1486
+  offset: 1, 1
+  index: -1
+脖子
+  rotate: false
+  xy: 3034, 445
+  size: 44, 36
+  orig: 47, 38
+  offset: 2, 1
+  index: -1
+脸部
+  rotate: false
+  xy: 2576, 296
+  size: 198, 222
+  orig: 198, 222
+  offset: 0, 0
+  index: -1
+腰带
+  rotate: true
+  xy: 3061, 637
+  size: 99, 28
+  orig: 102, 31
+  offset: 1, 2
+  index: -1
+蝴蝶
+  rotate: false
+  xy: 2965, 559
+  size: 55, 112
+  orig: 55, 112
+  offset: 0, 0
+  index: -1
+衣服右
+  rotate: false
+  xy: 3052, 215
+  size: 33, 47
+  orig: 33, 47
+  offset: 0, 0
+  index: -1
+衣服左
+  rotate: false
+  xy: 2891, 301
+  size: 86, 49
+  orig: 86, 49
+  offset: 0, 0
+  index: -1
+衣服打结1
+  rotate: false
+  xy: 3047, 381
+  size: 33, 62
+  orig: 34, 62
+  offset: 1, 0
+  index: -1
+衣服打结2
+  rotate: true
+  xy: 2964, 31
+  size: 24, 72
+  orig: 28, 73
+  offset: 2, 0
+  index: -1
+衬衫领口
+  rotate: false
+  xy: 2897, 152
+  size: 71, 52
+  orig: 71, 52
+  offset: 0, 0
+  index: -1
+裤子
+  rotate: true
+  xy: 2720, 158
+  size: 136, 75
+  orig: 136, 75
+  offset: 0, 0
+  index: -1
+裤子徽章
+  rotate: false
+  xy: 3029, 92
+  size: 21, 33
+  orig: 21, 33
+  offset: 0, 0
+  index: -1
+躯干
+  rotate: false
+  xy: 2786, 498
+  size: 141, 148
+  orig: 141, 175
+  offset: 0, 5
+  index: -1
+领口
+  rotate: false
+  xy: 2907, 652
+  size: 48, 34
+  orig: 48, 37
+  offset: 0, 0
+  index: -1
+飘带1
+  rotate: true
+  xy: 2964, 57
+  size: 93, 63
+  orig: 93, 63
+  offset: 0, 0
+  index: -1
+飘带2
+  rotate: false
+  xy: 2888, 206
+  size: 63, 92
+  orig: 64, 92
+  offset: 0, 0
+  index: -1
+飘带3
+  rotate: true
+  xy: 2937, 43
+  size: 107, 25
+  orig: 107, 28
+  offset: 0, 3
+  index: -1
+鼻子
+  rotate: false
+  xy: 2939, 353
+  size: 23, 31
+  orig: 26, 34
+  offset: 2, 2
+  index: -1
