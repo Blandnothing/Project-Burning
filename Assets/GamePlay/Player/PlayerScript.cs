@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float graceTime;
     [JsonProperty] [SerializeField] float m_speed = 4.0f;
     //ÌøÔ¾
-    [JsonProperty] public int maxJumpCount = 2;
+    [JsonProperty] public int maxJumpCount = 1;
     private int jumpCount;
     private bool jumpPressed;
     private bool isJump;
