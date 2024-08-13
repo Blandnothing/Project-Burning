@@ -72,7 +72,7 @@ public class PlayerScript : MonoBehaviour
         currentHealth = maxHealth;
         if (sliderHealth==null)
         {
-            sliderHealth = GameObject.Find("Health").GetComponent<Slider>();
+            sliderHealth = GameObject.Find("UI").transform.Find("Health").GetComponent<Slider>();
             if (sliderHealth == null)
             {
                 Debug.LogError("SliderHealth Lost");
@@ -97,7 +97,6 @@ public class PlayerScript : MonoBehaviour
             jumpPressed = true;
         }
 
-        Debug.Log(isAttack);
         if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !isAttack)
         {
             StopCoroutine(Attack());
