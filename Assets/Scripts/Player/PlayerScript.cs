@@ -45,11 +45,16 @@ public class PlayerScript : MonoBehaviour
     bool isDeath;
     //攻击
     [JsonProperty] public float attackPower = 5;
+    [JsonProperty] public float attackBack = 5;    //冲击力
     [JsonProperty] public float attackSpeed = 1;   //攻击时的移动速度
-    public float invincibleTime;
+    public float invincibleTime;                   //无敌帧时间
     bool isAttack;
-    public float attackBehind=0.2f;
+    public float attackBehind=0.2f;                //攻击后的冷却时间
     private float m_timeSinceAttack = 0.0f;
+    BoxCollider2D atkCol;        //攻击碰撞体
+    [SerializeField] AttackTriggerScript atkTrigger;
+    Coroutine curAtkC;  //当前攻击协程
+   
     //交互
     [HideInInspector] public bool isInteracted;
 
@@ -65,6 +70,7 @@ public class PlayerScript : MonoBehaviour
         m_skeleton = GetComponent<SkeletonAnimation>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         currentAnimation = "战斗待机";
+        atkCol = atkTrigger.GetComponent<BoxCollider2D>();
     }
     void Start()
     {
@@ -99,8 +105,9 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !isAttack)
         {
-            StopCoroutine(Attack());
-            StartCoroutine(Attack());
+            if(curAtkC!=null)
+            StopCoroutine(curAtkC);
+            curAtkC = StartCoroutine(Attack(attackPower,attackBack));
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -168,12 +175,24 @@ public class PlayerScript : MonoBehaviour
             jumpPressed = false;
         } 
     }
-    IEnumerator  Attack()
+    /// <summary>
+    /// 攻击
+    /// </summary>
+    /// <param name="atk">攻击力</param>
+    /// <param name="atkBack">攻击冲击力</param>
+    /// <returns></returns>
+    IEnumerator  Attack(float atk,float atkBack)
     {      
         isAttack = true;
 
+        atkCol.enabled = true;
+        atkTrigger.atk = atk;
+        atkTrigger.atkItemBack = atkBack;
         var track = SetAnimation("攻击",false);
-        track.Complete += (TrackEntry) => { isAttack = false; };
+        track.Complete += (TrackEntry) => { 
+            isAttack = false; 
+            atkCol.enabled = false;
+        };
         
 
         while (isAttack)
@@ -193,12 +212,6 @@ public class PlayerScript : MonoBehaviour
 
 
         isAttack = false;
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enermy"))
-        {
-        }
     }
     Spine.TrackEntry SetAnimation(string animation,bool loop)
     {

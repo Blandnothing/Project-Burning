@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class PuzzleCollection : MonoBehaviour
+public class ItemCollector : MonoBehaviour
 {
     public string puzzleName;
     private void OnTriggerEnter2D(Collider2D collision)

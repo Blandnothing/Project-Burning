@@ -1,4 +1,5 @@
 using Spine;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,15 +22,15 @@ public class Enermy : MonoBehaviour
         healthBackground = transform.Find("Health").GetComponent<Image>();
         healthValue = healthBackground.transform.Find("Value").GetComponent<Image>();
     }
-    public void GetHit(Vector2 direction, float attackPower, float criticalRate, float criticalDamage)
+    public void GetHit(Vector2 direction, float attackPower)
     {
         if (direction.x >= 0)
         {
-            transform.localScale=new Vector2(-transform.localScale.x, transform.localScale.y);
+            GetComponent<SpriteRenderer>().flipX=false;
         }
         else
         {
-            transform.localScale=new Vector2(transform.localScale.x, transform.localScale.y);
+            GetComponent<SpriteRenderer>().flipX = true;
         }
 
         currentHealth -= attackPower;
@@ -44,7 +45,7 @@ public class Enermy : MonoBehaviour
     }
     void SetHealthValue()
     {
-        healthValue.rectTransform.sizeDelta = new Vector2(healthBackground.rectTransform.rect.width * currentHealth / maxHealth, healthValue.rectTransform.rect.height);
+        healthValue.rectTransform.sizeDelta = new Vector2(healthBackground.rectTransform.rect.width * currentHealth / maxHealth, healthValue.rectTransform.sizeDelta.y);
     }
     public void Dead()
     {
