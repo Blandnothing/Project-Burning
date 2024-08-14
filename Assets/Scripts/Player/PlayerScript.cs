@@ -37,6 +37,7 @@ public class PlayerScript : MonoBehaviour
     private bool jumpPressed;
     private bool isJump;
     [SerializeField] float m_jumpForce = 7.5f;
+    public string preAnimation;
     //ÉúÃü
     [JsonProperty] public float maxHealth=100;
     [JsonProperty] float currentHealth;
@@ -163,6 +164,9 @@ public class PlayerScript : MonoBehaviour
         
         if (jumpPressed && (isGround  || graceTimer>0))
         {
+            if (currentAnimation != "ÌøÔ¾")
+                preAnimation = currentAnimation;
+            SetAnimation("ÌøÔ¾",false);        
             isJump = true;
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             jumpCount--;
@@ -170,6 +174,9 @@ public class PlayerScript : MonoBehaviour
             graceTimer = 0;
         }else if(jumpPressed && jumpCount > 0 && isJump)
         {
+            if (currentAnimation != "ÌøÔ¾")
+                preAnimation = currentAnimation;
+            SetAnimation("ÌøÔ¾",false);          
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             jumpCount--;
             jumpPressed = false;
@@ -218,14 +225,31 @@ public class PlayerScript : MonoBehaviour
         if(animation == currentAnimation) return null;
         Spine.TrackEntry track = m_skeleton.state.SetAnimation(0, animation, loop);
 
+        track.Complete += Track_Complete;
         currentAnimation = animation;
 
         return track;
     }
+
+    private void Track_Complete(Spine.TrackEntry trackEntry)
+    {
+        if (currentAnimation == "ÌøÔ¾")
+        {
+            SwitchAnim(preAnimation);
+        }
+    }
+
     void SwitchAnim()
     {
-        if (isAttack) return;
-        if (inputX!=0)
+        if (isAttack)
+        {
+            SetAnimation("¹¥»÷", false);
+        }
+        else if (isJump)
+        {
+            SetAnimation("ÌøÔ¾", false);
+        }
+        else if (inputX!=0)
         {
             SetAnimation("ÅÜ²½", true);
         }
@@ -233,23 +257,25 @@ public class PlayerScript : MonoBehaviour
         {
             SetAnimation("Õ½¶·´ý»ú", true);
         }
-        //if (isGround)
-        //{
-
-        //    m_animator.SetBool("Falling", false);
-        //    m_body2d.gravityScale = 1;
-        //}        
-        //else if (!isGround && m_body2d.velocity.y > 0) {
-        //    m_animator.SetBool("Jump", true);
-        //    m_body2d.gravityScale = 1;
-        //    graceTimer = 0;
-        //}    
-        //else if (m_body2d.velocity.y<0)
-        //{
-        //    m_animator.SetBool("Jump",false);
-        //    m_animator.SetBool("Falling", true);
-        //    m_body2d.gravityScale = 2;
-        //}
+    }
+    void SwitchAnim(string anim)
+    {
+        if (anim=="¹¥»÷")
+        {
+            SetAnimation("¹¥»÷", false);
+        }
+        else if (anim == "ÌøÔ¾")
+        {
+            SetAnimation("ÌøÔ¾", false);
+        }
+        else if (anim == "ÅÜ²½")
+        {
+            SetAnimation("ÅÜ²½", true);
+        }
+        else
+        {
+            SetAnimation("Õ½¶·´ý»ú", true);
+        }
     }
     public void ChangeHealth(float amount)
     {

@@ -11,7 +11,6 @@ public class AttackTriggerScript : MonoBehaviour
     {
         if (other.CompareTag("Enermy"))
         {
-            Debug.Log(1);
             Vector2 v=other.transform.position-transform.position;     //³å»÷Ð§¹û
             v.Normalize();
             other.GetComponent<Rigidbody2D>().velocity = v*atkItemBack;
