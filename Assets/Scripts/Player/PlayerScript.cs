@@ -8,6 +8,7 @@ using Cinemachine;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using Spine.Unity;
+using System.Collections.Generic;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class PlayerScript : MonoBehaviour
@@ -22,6 +23,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody2D m_body2d;
     private SkeletonAnimation m_skeleton;
     string currentAnimation;
+    Spine.TrackEntry currentTrack;
     CinemachineImpulseSource impulseSource;
    
     //ÒÆ¶¯
@@ -53,15 +55,35 @@ public class PlayerScript : MonoBehaviour
     public float invincibleTime;                   //ÎÞµÐÖ¡Ê±¼ä
     bool isAttack;
     public float attackBehind=0.2f;                //¹¥»÷ºóµÄÀäÈ´Ê±¼ä
-    private float m_timeSinceAttack = 0.0f;
     BoxCollider2D atkCol;        //¹¥»÷Åö×²Ìå
     [SerializeField] AttackTriggerScript atkTrigger;
     Coroutine curAtkC;  //µ±Ç°¹¥»÷Ð­³Ì
+
+    public Dictionary<KeyCode, SkillInfo> dicSkill = new();
    
     //½»»¥
     [HideInInspector] public bool isInteracted;
 
+    public struct SkillInfo
+    {
+        public enum SkillType
+        {
+            atk,
+            heal
+        }
+        public SkillType type;
+        public string anim;
+        public float atk;
+        public float atkBack;
 
+        public SkillInfo(SkillType type, string anim, float attackPower, float attackBack) : this()
+        {
+            this.type = type;
+            this.anim = anim;
+            this.atk = attackPower;
+            this.atkBack = attackBack;
+        }
+    }
 
     private void Awake()
     {
@@ -75,10 +97,11 @@ public class PlayerScript : MonoBehaviour
         currentAnimation = "Õ½¶·´ý»ú";
         atkCol = atkTrigger.GetComponent<BoxCollider2D>();
         prePos = transform.position;
+        
     }
     void Start()
     {
-        
+        dicSkill[KeyCode.Mouse0] = new SkillInfo(SkillInfo.SkillType.atk,"¹¥»÷", attackPower, attackBack);
         currentHealth = maxHealth;
         if (sliderHealth==null)
         {
@@ -96,7 +119,6 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         if (isDeath) return;
-        m_timeSinceAttack += Time.deltaTime;
         MoveTrigger();
 
         inputX = Input.GetAxis("Horizontal");
@@ -107,11 +129,22 @@ public class PlayerScript : MonoBehaviour
             jumpPressed = true;
         }
 
-        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !isAttack)
+        foreach (var item in dicSkill)
         {
-            if(curAtkC!=null)
-            StopCoroutine(curAtkC);
-            curAtkC = StartCoroutine(Attack(attackPower,attackBack));
+            if (Input.GetKeyDown(item.Key))
+            {
+                var info = item.Value;
+                switch (info.type)
+                {
+                    case SkillInfo.SkillType.atk:
+                        AtkSkill(info.anim, info.atk, info.atkBack);
+                        break;
+                    case SkillInfo.SkillType.heal:
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -121,7 +154,7 @@ public class PlayerScript : MonoBehaviour
     private void FixedUpdate()
     {
         isGround = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.7f, 0.1f), 0, groundLayer).Length!=0;
-        isFalling = m_body2d.velocity.y < 0;
+        isFalling = m_body2d.velocity.y < -0.01;
         GroundMovement();
         Jump();
 
@@ -190,14 +223,14 @@ public class PlayerScript : MonoBehaviour
     /// <param name="atk">¹¥»÷Á¦</param>
     /// <param name="atkBack">¹¥»÷³å»÷Á¦</param>
     /// <returns></returns>
-    IEnumerator  Attack(float atk,float atkBack)
+    IEnumerator  Attack(string anim,float atk,float atkBack)
     {      
         isAttack = true;
 
         atkCol.enabled = true;
         atkTrigger.atk = atk;
         atkTrigger.atkItemBack = atkBack;
-        var track = SetAnimation("¹¥»÷",false);
+        var track = SetAnimation(anim,false);
         track.Complete += (TrackEntry) => { 
             isAttack = false; 
             atkCol.enabled = false;
@@ -209,7 +242,6 @@ public class PlayerScript : MonoBehaviour
             yield return null;  
         }
         float startTime = Time.time;
-        m_timeSinceAttack = 0f;
 
         while (Time.time - startTime < attackBehind)
         {
@@ -224,10 +256,15 @@ public class PlayerScript : MonoBehaviour
     }
     Spine.TrackEntry SetAnimation(string animation,bool loop)
     {
-        if(animation == currentAnimation) return null;
+        if(animation == currentAnimation)
+        {
+            if(currentTrack != null && !currentTrack.IsComplete) return currentTrack;
+            else return null;
+        }
         Spine.TrackEntry track = m_skeleton.state.SetAnimation(0, animation, loop);
 
         track.Complete += Track_Complete;
+        currentTrack=track;
         currentAnimation = animation;
 
         return track;
@@ -240,25 +277,27 @@ public class PlayerScript : MonoBehaviour
 
     void SwitchAnim()
     {
-        if (isAttack)
-        {
-            SetAnimation("¹¥»÷", false);
-        }
-        else if (isFalling)
+        if (isAttack) return;
+        //Debug.Log(isFalling);
+        if (isFalling)
         {
             SetAnimation("ÌøÔ¾2", false);
+            //Debug.Log(2);
         }
         else if (isJump)
         {
             SetAnimation("ÌøÔ¾1", false);
-        }      
+            //Debug.Log(3);
+        }
         else if (inputX!=0)
         {
             SetAnimation("ÅÜ²½", true);
+            //Debug.Log(4);
         }
         else
         {
             SetAnimation("Õ½¶·´ý»ú", true);
+            //Debug.Log(5);
         }
     }
     void SwitchAnim(string anim)
@@ -331,8 +370,20 @@ public class PlayerScript : MonoBehaviour
         StopCoroutine(Invincible());
         StartCoroutine(Invincible());
     }
+    public void AtkSkill(string anim,float atk,float abk)
+    {
+        if (isAttack)
+        {
+            return;
+        }
+
+        if (curAtkC != null)
+            StopCoroutine(curAtkC);
+        curAtkC = StartCoroutine(Attack(anim,attackPower, attackBack));
+    }
     void Dead()
     {
         SceneManager.LoadScene(0);
     }
+    
 }

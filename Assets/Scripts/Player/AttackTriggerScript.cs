@@ -9,12 +9,12 @@ public class AttackTriggerScript : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enermy"))
+        if (other.CompareTag("Enemy"))
         {
             Vector2 v=other.transform.position-transform.position;     //³å»÷Ð§¹û
             v.Normalize();
             other.GetComponent<Rigidbody2D>().velocity = v*atkItemBack;
-            other.GetComponent<Enermy>().GetHit(v, atk);
+            other.GetComponent<Enemy>().GetHit(v, atk);
         }
     }
 }

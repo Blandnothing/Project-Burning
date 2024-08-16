@@ -5,17 +5,17 @@ using static UnityEditor.Progress;
 
 public class ItemCollector : MonoBehaviour
 {
-    public string puzzleName;
+    public PuzzlePiece piece;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            if (InventoryManager.Instance.puzzleDictionary.ContainsKey(puzzleName))
+            if (InventoryManager.Instance.puzzleDictionary.Contains(piece))
             {
                 return;
             }
-            InventoryManager.Instance.AddObject(puzzleName, 1);
+            InventoryManager.Instance.AddObject(piece);
         }
     }
 }

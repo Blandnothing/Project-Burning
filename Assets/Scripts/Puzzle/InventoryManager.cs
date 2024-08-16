@@ -15,10 +15,10 @@ public class InventoryManager
             return instance; 
         }
     }
-    public Dictionary<string, int> puzzleDictionary;  //存储拼图的字典，value的int类型暂为占位符
+    public List<PuzzlePiece> puzzleDictionary;  //存储拼图的字典，value的int类型暂为占位符
     public InventoryManager()
     {
-        Dictionary<string, int> localInventoryData=LocalPlayerInventoryDada.LoadInventoryData();     //读取本地存储的背包数据初始化
+        List<PuzzlePiece> localInventoryData =SaveAndLoad.LoadInventoryData<List<PuzzlePiece>>(LocalPath.inventoryData);     //读取本地存储的背包数据初始化
         if (localInventoryData==null)
         {
             puzzleDictionary = new();
@@ -28,12 +28,13 @@ public class InventoryManager
             puzzleDictionary=localInventoryData;
         }
     }
-    public void AddObject(string key,int value)
+    public void AddObject(PuzzlePiece value)
     {
-        puzzleDictionary[key]=value;
+        puzzleDictionary.Add(value);
+        SaveInventoryData();
     }
     public void SaveInventoryData()
     {
-        LocalPlayerInventoryDada.SaveInventoryData(puzzleDictionary);
+        SaveAndLoad.SaveInventoryData<List<PuzzlePiece>>(LocalPath.inventoryData,puzzleDictionary);
     }
 }

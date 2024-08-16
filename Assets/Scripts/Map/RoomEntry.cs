@@ -11,7 +11,6 @@ public class RoomEntry : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        Debug.Log(1);
         CinemachineVirtualCameraBase mainCam = (CinemachineVirtualCameraBase)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         mainCam.gameObject.SetActive(false);
         if (collision.transform.position.x<transform.position.x)

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.WSA;
 
-public class WalkEnemy : Enermy
+public class WalkEnemy : Enemy
 {
     public float speed;
-    [Header("左巡逻点")] Transform leftPoint;
-    [Header("右巡逻点")] Transform rightPoint;
+    float leftPoint;
+    float rightPoint;
     [Header("初始方向，右为true,左为false")]public bool direction;
     public float atkPower;
     private void Start()
     {
-        leftPoint = transform.Find("Left");
-        rightPoint = transform.Find("Right");
+        leftPoint = transform.Find("Left").position.x;
+        rightPoint = transform.Find("Right").position.x;
     }
     void Move()
     {
@@ -26,12 +26,14 @@ public class WalkEnemy : Enermy
     }
     void ChangeDirection()
     {
-        if (transform.position.x <= leftPoint.position.x)
+        if (transform.position.x <= leftPoint)
         {
             direction= true;
-        }else if (transform.position.x >= rightPoint.position.x)
+            skeletonAnimation.skeleton.ScaleX = -1;
+        }else if (transform.position.x >= rightPoint)
         {
             direction = false;
+            skeletonAnimation.skeleton.ScaleX = 1;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

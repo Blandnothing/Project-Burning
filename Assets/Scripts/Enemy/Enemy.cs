@@ -7,22 +7,24 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enermy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] int maxHealth;
     float currentHealth;
-    Image healthBackground;    //ÑªÌõ
-    Image healthValue;
+    SpriteRenderer healthBackground;    //ÑªÌõ
+    SpriteRenderer healthValue;
 
     [SerializeField] float invincibleTime;
     protected new Rigidbody2D rigidbody;
+    protected SkeletonAnimation skeletonAnimation;
 
     private void Awake()
     {
         currentHealth = maxHealth;
-        healthBackground = transform.Find("Health").GetComponent<Image>();
-        healthValue = healthBackground.transform.Find("Value").GetComponent<Image>();
+        healthBackground = transform.Find("Health").GetComponent<SpriteRenderer>();
+        healthValue = healthBackground.transform.Find("Value").GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
+        skeletonAnimation = GetComponent<SkeletonAnimation>();
     }
     public void GetHit(Vector2 direction, float attackPower)
     {
@@ -47,7 +49,7 @@ public class Enermy : MonoBehaviour
     }
     void SetHealthValue()
     {
-        healthValue.rectTransform.sizeDelta = new Vector2(healthBackground.rectTransform.rect.width * currentHealth / maxHealth, healthValue.rectTransform.sizeDelta.y);
+        healthValue.transform.localScale = new Vector2(currentHealth / maxHealth, healthValue.transform.localScale.y);
     }
     public void Dead()
     {
@@ -59,7 +61,7 @@ public class Enermy : MonoBehaviour
         GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0.5f);
         yield return new WaitForSeconds(invincibleTime);
         GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0);
-        gameObject.layer = LayerMask.NameToLayer("Enermy");
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
     }
     protected virtual void OnDestroy()
     {
