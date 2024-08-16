@@ -15,22 +15,24 @@ public class Enermy : MonoBehaviour
     Image healthValue;
 
     [SerializeField] float invincibleTime;
+    protected new Rigidbody2D rigidbody;
 
     private void Awake()
     {
         currentHealth = maxHealth;
         healthBackground = transform.Find("Health").GetComponent<Image>();
         healthValue = healthBackground.transform.Find("Value").GetComponent<Image>();
+        rigidbody = GetComponent<Rigidbody2D>();
     }
     public void GetHit(Vector2 direction, float attackPower)
     {
         if (direction.x >= 0)
         {
-            GetComponent<SpriteRenderer>().flipX=false;
+            GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
         }
         else
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
         }
 
         currentHealth -= attackPower;
@@ -53,8 +55,10 @@ public class Enermy : MonoBehaviour
     }
     IEnumerator Invincible()
     {
-        gameObject.layer = LayerMask.NameToLayer("invincible");
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0.5f);
         yield return new WaitForSeconds(invincibleTime);
+        GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0);
         gameObject.layer = LayerMask.NameToLayer("Enermy");
     }
     protected virtual void OnDestroy()

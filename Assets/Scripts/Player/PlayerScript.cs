@@ -31,11 +31,13 @@ public class PlayerScript : MonoBehaviour
     private float graceTimer;
     [SerializeField] float graceTime;
     [JsonProperty] [SerializeField] float m_speed = 4.0f;
+    Vector2 prePos;       //½ÇÉ«ÉÏÒ»Ö¡µÄÎ»ÖÃ
     //ÌøÔ¾
     [JsonProperty] public int maxJumpCount = 1;
     private int jumpCount;          //¿ÉÌøÔ¾´ÎÊý
     private bool jumpPressed;
     private bool isJump;
+    bool isFalling;       //ÊÇ·ñÏÂÂä
     [SerializeField] float m_jumpForce = 7.5f;
     public string preAnimation;
     //ÉúÃü
@@ -72,6 +74,7 @@ public class PlayerScript : MonoBehaviour
         impulseSource = GetComponent<CinemachineImpulseSource>();
         currentAnimation = "Õ½¶·´ý»ú";
         atkCol = atkTrigger.GetComponent<BoxCollider2D>();
+        prePos = transform.position;
     }
     void Start()
     {
@@ -92,9 +95,9 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-
         if (isDeath) return;
         m_timeSinceAttack += Time.deltaTime;
+        MoveTrigger();
 
         inputX = Input.GetAxis("Horizontal");
 
@@ -118,6 +121,7 @@ public class PlayerScript : MonoBehaviour
     private void FixedUpdate()
     {
         isGround = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.7f, 0.1f), 0, groundLayer).Length!=0;
+        isFalling = m_body2d.velocity.y < 0;
         GroundMovement();
         Jump();
 
@@ -127,12 +131,12 @@ public class PlayerScript : MonoBehaviour
     {
         if (inputX > 0)
         {
-            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
         }
 
         else if (inputX < 0)
         {
-            transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
         }
         if (isAttack)
         {
@@ -162,21 +166,19 @@ public class PlayerScript : MonoBehaviour
             return;
         }
         
-        if (jumpPressed && (isGround  || graceTimer>0))
+        if (jumpPressed && (isGround  || graceTimer>0))     //µØÃæÆðÌø
         {
-            if (currentAnimation != "ÌøÔ¾")
-                preAnimation = currentAnimation;
-            SetAnimation("ÌøÔ¾",false);        
+            SetAnimation("ÌøÔ¾1",false);        
             isJump = true;
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             jumpCount--;
             jumpPressed = false;
             graceTimer = 0;
-        }else if(jumpPressed && jumpCount > 0 && isJump)
+        }else if(jumpPressed && jumpCount > 0 && isJump)       //¿ÕÖÐÆðÌø
         {
-            if (currentAnimation != "ÌøÔ¾")
+            if (currentAnimation != "ÌøÔ¾1")
                 preAnimation = currentAnimation;
-            SetAnimation("ÌøÔ¾",false);          
+            SetAnimation("ÌøÔ¾1",false);          
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             jumpCount--;
             jumpPressed = false;
@@ -233,10 +235,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Track_Complete(Spine.TrackEntry trackEntry)
     {
-        if (currentAnimation == "ÌøÔ¾")
-        {
-            SwitchAnim(preAnimation);
-        }
+        
     }
 
     void SwitchAnim()
@@ -245,10 +244,14 @@ public class PlayerScript : MonoBehaviour
         {
             SetAnimation("¹¥»÷", false);
         }
+        else if (isFalling)
+        {
+            SetAnimation("ÌøÔ¾2", false);
+        }
         else if (isJump)
         {
-            SetAnimation("ÌøÔ¾", false);
-        }
+            SetAnimation("ÌøÔ¾1", false);
+        }      
         else if (inputX!=0)
         {
             SetAnimation("ÅÜ²½", true);
@@ -264,9 +267,9 @@ public class PlayerScript : MonoBehaviour
         {
             SetAnimation("¹¥»÷", false);
         }
-        else if (anim == "ÌøÔ¾")
+        else if (anim == "ÌøÔ¾1")
         {
-            SetAnimation("ÌøÔ¾", false);
+            SetAnimation("ÌøÔ¾1", false);
         }
         else if (anim == "ÅÜ²½")
         {
@@ -279,12 +282,6 @@ public class PlayerScript : MonoBehaviour
     }
     public void ChangeHealth(float amount)
     {
-        if (amount<0)
-        {
-            //m_animator.SetTrigger("Hurt");
-            StopCoroutine(Invincible());
-            StartCoroutine(Invincible());
-        }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         if(currentHealth <= 0)
         {
@@ -296,11 +293,45 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator Invincible()
     {
-        gameObject.layer = LayerMask.NameToLayer("invincible");
-        yield return new WaitForSeconds(invincibleTime);
-        gameObject.layer = LayerMask.NameToLayer("player");
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        MeshRenderer mesh= GetComponent<MeshRenderer>();
+        mesh.material.SetFloat("_FillPhase", 0.5f);
+        float invicibleTimer = 0;
+        while (invicibleTimer<invincibleTime)
+        {
+            yield return null;
+            invicibleTimer+=Time.deltaTime;
+            mesh.material.SetFloat("_FillPhase", Mathf.Lerp(0.5f,0,invicibleTimer/invincibleTime));
+        }
+        mesh.material.SetFloat("_FillPhase", 0);
+        gameObject.layer = LayerMask.NameToLayer("Player");
     } 
-    void Death()
+    void MoveTrigger() //½ÇÉ«ÒÆ¶¯ÊÂ¼þ
+    {
+        EventCenter.Instance.Invoke<float>(EventName.playerMoveX, transform.position.x - prePos.x);
+        prePos=transform.position;
+    }
+    public void GetHit(Vector2 direction, float attackPower)
+    {
+        if (direction.x >= 0)
+        {
+            GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
+        }
+        else
+        {
+            GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
+        }
+
+        ChangeHealth(-attackPower);
+
+        if (currentHealth <= 0)
+        {
+            Dead();
+        }
+        StopCoroutine(Invincible());
+        StartCoroutine(Invincible());
+    }
+    void Dead()
     {
         SceneManager.LoadScene(0);
     }

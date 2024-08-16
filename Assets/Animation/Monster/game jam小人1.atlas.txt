@@ -1,0 +1,62 @@
+
+game jam小人1.png
+size: 676,423
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1号怪物/右手臂
+  rotate: true
+  xy: 101, 332
+  size: 89, 142
+  orig: 89, 142
+  offset: 0, 0
+  index: -1
+1号怪物/左手臂
+  rotate: true
+  xy: 389, 306
+  size: 115, 133
+  orig: 115, 133
+  offset: 0, 0
+  index: -1
+1号怪物/眼睛
+  rotate: false
+  xy: 2, 339
+  size: 97, 82
+  orig: 97, 82
+  offset: 0, 0
+  index: -1
+2号怪物/眼睛
+  rotate: false
+  xy: 2, 339
+  size: 97, 82
+  orig: 97, 82
+  offset: 0, 0
+  index: -1
+1号怪物/身体
+  rotate: false
+  xy: 2, 28
+  size: 335, 302
+  orig: 335, 302
+  offset: 0, 0
+  index: -1
+2号怪物/右手臂
+  rotate: true
+  xy: 245, 332
+  size: 89, 142
+  orig: 89, 142
+  offset: 0, 0
+  index: -1
+2号怪物/左手臂
+  rotate: true
+  xy: 524, 306
+  size: 115, 133
+  orig: 115, 133
+  offset: 0, 0
+  index: -1
+2号怪物/身体
+  rotate: false
+  xy: 339, 2
+  size: 335, 302
+  orig: 335, 302
+  offset: 0, 0
+  index: -1
