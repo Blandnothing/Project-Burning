@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class RoomEntry : MonoBehaviour
 {
-    [Header("Í¨µÀ×ó±ßµÄÏà»ú")] public GameObject leftCamera;
-    [Header("Í¨µÀÓÒ±ßµÄÏà»ú")] public GameObject rightCamera;
+    [Header("é€šé“å·¦è¾¹çš„ç›¸æœº")] public GameObject leftCamera;
+    [Header("é€šé“å³è¾¹çš„ç›¸æœº")] public GameObject rightCamera;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;

@@ -15,10 +15,10 @@ public class InventoryManager
             return instance; 
         }
     }
-    public List<PuzzlePiece> puzzleDictionary;  //´æ´¢Æ´Í¼µÄ×Öµä£¬valueµÄintÀàÐÍÔÝÎªÕ¼Î»·û
+    public List<PuzzlePiece> puzzleDictionary;  //ï¿½æ´¢Æ´Í¼ï¿½ï¿½ï¿½Öµä£¬valueï¿½ï¿½intï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÕ¼Î»ï¿½ï¿½
     public InventoryManager()
     {
-        List<PuzzlePiece> localInventoryData =SaveAndLoad.LoadInventoryData<List<PuzzlePiece>>(LocalPath.inventoryData);     //¶ÁÈ¡±¾µØ´æ´¢µÄ±³°üÊý¾Ý³õÊ¼»¯
+        List<PuzzlePiece> localInventoryData =SaveAndLoad.LoadInventoryData<List<PuzzlePiece>>(LocalPath.inventoryData);     //ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ø´æ´¢ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½Ê¼ï¿½ï¿½
         if (localInventoryData==null)
         {
             puzzleDictionary = new();
