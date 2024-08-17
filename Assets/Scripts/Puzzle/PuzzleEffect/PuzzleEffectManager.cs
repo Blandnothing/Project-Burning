@@ -17,13 +17,13 @@ public class PuzzleEffectManager : MonoBehaviour
         }
     }
     public Dictionary<KeyCode, Skill> skills = new();
-    List<Buff> buffs = new();
+    Dictionary<KeyCode,Buff> buffs = new();
     static bool isOne;
     private void Awake()
     {
         if (isOne)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -33,6 +33,21 @@ public class PuzzleEffectManager : MonoBehaviour
     }
     void Start()
     {
+        foreach (var item in buffs)
+        {
+            switch (item.Value.Selector)
+            {
+                case Buff.BuffSelector.Skill:
+                    if(skills.ContainsKey(item.Key))
+                        item.Value.AddBuff(skills[item.Key]);
+                    break;
+                case Buff.BuffSelector.Player:
+                    item.Value.AddBuff(PlayerScript.Instance);
+                    break;
+                default:
+                    break;
+            }
+        }
         
         foreach (var item in skills)
         {

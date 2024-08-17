@@ -15,44 +15,65 @@ public class Enemy : MonoBehaviour
     SpriteRenderer healthValue;
 
     [SerializeField] float invincibleTime;
-    protected new Rigidbody2D rigidbody;
+    [SerializeField] float deadTime = 1;
+    protected Rigidbody2D rb2d;
     protected SkeletonAnimation skeletonAnimation;
+    protected bool isDead;
 
     private void Awake()
     {
         currentHealth = maxHealth;
         healthBackground = transform.Find("Health").GetComponent<SpriteRenderer>();
         healthValue = healthBackground.transform.Find("Value").GetComponent<SpriteRenderer>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
         skeletonAnimation = GetComponent<SkeletonAnimation>();
     }
     public void GetHit(Vector2 direction, float attackPower)
     {
-        if (direction.x >= 0)
-        {
-            GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
-        }
-        else
-        {
-            GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
-        }
+        //if (direction.x >= 0)
+        //{
+        //    GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
+        //}
+        //else
+        //{
+        //    GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
+        //}
 
         currentHealth -= attackPower;
         SetHealthValue();
 
         if (currentHealth <= 0)
         {
-            Dead();
+            StopCoroutine(Dead());
+            StartCoroutine(Dead());
         }
-        StopCoroutine(Invincible());
-        StartCoroutine(Invincible());
+        else
+        {
+            StopCoroutine(Invincible());
+            StartCoroutine(Invincible());
+        }
+        
     }
     void SetHealthValue()
     {
         healthValue.transform.localScale = new Vector2(currentHealth / maxHealth, healthValue.transform.localScale.y);
     }
-    public void Dead()
+    IEnumerator Dead()
     {
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        rb2d.bodyType = RigidbodyType2D.Static;
+        Destroy(healthBackground.gameObject);
+        isDead = true;
+
+        var skeleton = GetComponent<SkeletonAnimation>().skeleton;
+        float deadTimer = 0;
+        while (deadTimer < deadTime)
+        {
+            yield return null;
+            deadTimer += Time.deltaTime;
+            skeleton.SetColor(new Color(1, 1, 1, Mathf.Lerp(1, 0, deadTimer / deadTime)));
+        }
+        skeleton.SetColor(new Color(1, 1, 1, 0));
         Destroy(gameObject);
     }
     IEnumerator Invincible()

@@ -41,7 +41,6 @@ public class PlayerScript : MonoBehaviour
     private bool isJump;
     bool isFalling;       //ÊÇ·ñÏÂÂä
     [SerializeField] float m_jumpForce = 7.5f;
-    public string preAnimation;
     //ÉúÃü
     [JsonProperty] public float maxHealth=100;
     [JsonProperty] float currentHealth;
@@ -75,6 +74,7 @@ public class PlayerScript : MonoBehaviour
         public string anim;
         public float atk;
         public float atkBack;
+        public float healValue;
 
         public SkillInfo(SkillType type, string anim, float attackPower, float attackBack) : this()
         {
@@ -82,6 +82,12 @@ public class PlayerScript : MonoBehaviour
             this.anim = anim;
             this.atk = attackPower;
             this.atkBack = attackBack;
+        }
+        public SkillInfo(SkillType type, string anim, float healValue) : this()
+        {
+            this.type = type;
+            this.anim = anim;
+            this.healValue = healValue;
         }
     }
 
@@ -140,6 +146,7 @@ public class PlayerScript : MonoBehaviour
                         AtkSkill(info.anim, info.atk, info.atkBack);
                         break;
                     case SkillInfo.SkillType.heal:
+                        HealSkill(info.anim, info.healValue);
                         break;
                     default:
                         break;
@@ -209,8 +216,6 @@ public class PlayerScript : MonoBehaviour
             graceTimer = 0;
         }else if(jumpPressed && jumpCount > 0 && isJump)       //¿ÕÖÐÆðÌø
         {
-            if (currentAnimation != "ÌøÔ¾1")
-                preAnimation = currentAnimation;
             SetAnimation("ÌøÔ¾1",false);          
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             jumpCount--;
@@ -227,9 +232,9 @@ public class PlayerScript : MonoBehaviour
     {      
         isAttack = true;
 
-        atkCol.enabled = true;
         atkTrigger.atk = atk;
         atkTrigger.atkItemBack = atkBack;
+        atkCol.enabled = true;       
         var track = SetAnimation(anim,false);
         track.Complete += (TrackEntry) => { 
             isAttack = false; 
@@ -379,7 +384,15 @@ public class PlayerScript : MonoBehaviour
 
         if (curAtkC != null)
             StopCoroutine(curAtkC);
-        curAtkC = StartCoroutine(Attack(anim,attackPower, attackBack));
+        curAtkC = StartCoroutine(Attack(anim, atk, abk));
+    }
+    public void HealSkill(string anim,float healValue)
+    {
+        if (anim != "")
+        {
+            SetAnimation(anim,false);
+        }
+        ChangeHealth(healValue);
     }
     void Dead()
     {

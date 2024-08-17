@@ -17,10 +17,11 @@ public class WalkEnemy : Enemy
     }
     void Move()
     {
-        rigidbody.velocity = (direction ? 1 : -1) *speed*Vector2.right;
+        rb2d.velocity = (direction ? 1 : -1) *speed*Vector2.right;
     }
     private void Update()
     {
+        if(isDead) return;
         ChangeDirection();
         Move();
     }
