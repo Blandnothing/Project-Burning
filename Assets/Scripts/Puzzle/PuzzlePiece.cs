@@ -8,7 +8,7 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 {
     public int id;
     PuzzleEffect effect;
-    public int p_height = 4, p_width = 4;
+    public int p_height = 5, p_width = 5;
     private Vector3 base_scale;
     public List<Vector2Int> connectedPieces;
     private RectTransform rectTrans;
