@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903cc32488d52f8479dd88f83ffc3440, type: 3}
   m_Name: "\u526F\u62FC\u56FE1"
   m_EditorClassIdentifier: 
-  id: 101
+  id: 102
   effect: {fileID: 11400000, guid: 586f6061e4a3681419e8b9b850037af7, type: 2}
-  p_height: 5
-  p_width: 5
-  connectedPieces: []
+  p_height: 2
+  p_width: 3
+  puzzlePieces: 010111
+  connectedPieces:
+  - {x: 1, y: 1}
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 2, y: 0}

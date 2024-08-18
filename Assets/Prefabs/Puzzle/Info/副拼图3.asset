@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 103
   effect: {fileID: 11400000, guid: 586f6061e4a3681419e8b9b850037af7, type: 2}
-  p_height: 5
-  p_width: 5
-  connectedPieces: []
+  p_height: 1
+  p_width: 2
+  puzzlePieces: 11
+  connectedPieces:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}

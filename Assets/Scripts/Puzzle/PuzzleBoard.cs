@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class PuzzleBoard : MonoBehaviour, IDropHandler
 {
-    public int width = 8;
-    public int height = 7;
+    public int width = 5;
+    public int height = 5;
     // public GameObject slots;
     public Sprite[] puzzleSprites;
     // Start is called before the first frame update
@@ -27,9 +27,16 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
     }
 
     // Update is called once per frame
-    void Update()
+    void Awake()
     {
-
+        foreach (var (piece, pos) in pieces)
+        {
+            var corners = new Vector3[4];
+            piece.rectTrans.GetWorldCorners(corners);
+            piece.rectTrans.position = new Vector3(pos.x * slotSize, pos.y * slotSize)
+                + piece.rectTrans.position - corners[0] + basePos;
+            piece.moveTo(this);
+        }
     }
 
     private bool TryPut(int x, int y, List<Vector2Int> connectedPieces)
@@ -54,6 +61,7 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        Debug.Log("OnDrop");
         var transform = eventData.pointerDrag.GetComponent<RectTransform>();
         var corners = new Vector3[4];
         transform.GetWorldCorners(corners);
@@ -69,7 +77,7 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
             transform.position = new Vector3(x_point * slotSize, y_point * slotSize)
                                  + (transform.position - corners[0]) + basePos;
 
-            EnablePuzzle(piece);
+            // EnablePuzzle(piece);
         }
         else Debug.Log("fail");
     }
