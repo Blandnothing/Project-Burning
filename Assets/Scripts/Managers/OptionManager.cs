@@ -18,9 +18,14 @@ public class OptionManager : MonoBehaviour
     {
         StartCoroutine(LoadGame(index));
     }
-    IEnumerator LoadGame(int index)
+
+    public void AddScene(int index)
     {
-        var async = SceneManager.LoadSceneAsync(index);
+        StartCoroutine(LoadGame(index, true));
+    }
+    static IEnumerator LoadGame(int index, bool add = false)
+    {
+        var async = add ? SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive) : SceneManager.LoadSceneAsync(index);
         while (!async.isDone)
         {
             yield return null;

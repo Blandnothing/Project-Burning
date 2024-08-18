@@ -9,9 +9,9 @@ public class Blink : MonoBehaviour
 {
     [SerializeField]
     private Image _img;
-    [SerializeField, Header("最后一组的duration无实际作用！")]
+    [SerializeField, Header("鏈�鍚庝竴缁勭殑duration鏃犲疄闄呬綔鐢紒")]
     private BlinkData[] _OpenEyeData;
-    [SerializeField, Header("最后一组的duration无实际作用！")]
+    [SerializeField, Header("鏈�鍚庝竴缁勭殑duration鏃犲疄闄呬綔鐢紒")]
     private BlinkData[] _CloseEyeData;
     private IEnumerator _blinkCoroutine;
 

@@ -15,10 +15,10 @@ public class InventoryManager
             return instance; 
         }
     }
-    public Dictionary<int,PuzzleInfo> puzzleDictionary;  //�洢ƴͼ���ֵ䣬value��int������Ϊռλ��
+    public Dictionary<int,PuzzleInfo> puzzleDictionary;  //閿熻姤鍌ㄦ嫾鍥鹃敓鏂ゆ嫹閿熻鍏革紝value閿熸枻鎷穒nt閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷蜂负鍗犱綅閿熸枻鎷�
     public InventoryManager()
     {
-        Dictionary<int, PuzzleInfo> localInventoryData =SaveAndLoad.LoadInventoryData<Dictionary<int, PuzzleInfo>>(LocalPath.inventoryData);     //��ȡ���ش洢�ı������ݳ�ʼ��
+        Dictionary<int, PuzzleInfo> localInventoryData =SaveAndLoad.LoadInventoryData<Dictionary<int, PuzzleInfo>>(LocalPath.inventoryData);     //閿熸枻鎷峰彇閿熸枻鎷烽敓鎴瓨鍌ㄩ敓渚ユ唻鎷烽敓鏂ゆ嫹閿熸枻鎷烽敓鎹风鎷峰閿熸枻鎷�
         if (localInventoryData==null)
         {
             puzzleDictionary = new();
