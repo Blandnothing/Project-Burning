@@ -16,4 +16,18 @@ MonoBehaviour:
   effect: {fileID: 11400000, guid: 2c444514ad32c7c41a90aa2517d6b5b2, type: 2}
   p_height: 5
   p_width: 5
-  connectedPieces: []
+  puzzlePieces: 0010011111011110010100001
+  connectedPieces:
+  - {x: 2, y: 4}
+  - {x: 0, y: 3}
+  - {x: 1, y: 3}
+  - {x: 2, y: 3}
+  - {x: 3, y: 3}
+  - {x: 4, y: 3}
+  - {x: 1, y: 2}
+  - {x: 2, y: 2}
+  - {x: 3, y: 2}
+  - {x: 4, y: 2}
+  - {x: 2, y: 1}
+  - {x: 4, y: 1}
+  - {x: 4, y: 0}

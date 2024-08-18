@@ -1,6 +1,8 @@
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Blink : MonoBehaviour
@@ -20,7 +22,7 @@ public class Blink : MonoBehaviour
     private void Start()
     {
         PlayBlink(_OpenEyeData);
-        EventCenter.Instance.AddEvent(EventName.dead, ()=> PlayBlink(_CloseEyeData));
+        EventCenter.Instance.AddEvent(EventName.dead, ()=> BlinkLoadScene(1));
     }
     public void PlayBlink(BlinkData[] _data)
     {
@@ -64,6 +66,25 @@ public class Blink : MonoBehaviour
     {
         _img.material.SetVector("_Param", new Vector4(0.6f, y, 1, 1));
     }
+    public void BlinkLoadScene(int sceneIndex)
+    {
+        StartCoroutine(LoadScene(sceneIndex));
+        PlayBlink(_CloseEyeData);
+    }
+    IEnumerator LoadScene(int index)
+    {
+        var async = SceneManager.LoadSceneAsync(index);
+        async.allowSceneActivation = false;
+        float deadTime = 2;
+        float deadTimer = 0;
+        while (!async.isDone && deadTimer < deadTime)
+        {
+            deadTimer += Time.deltaTime;
+            yield return null;
+        }
+        async.allowSceneActivation = true;
+    }
+
 
     [System.Serializable]
     public class BlinkData

@@ -393,7 +393,8 @@ public class PlayerScript : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Dead();
+            StopCoroutine(Dead());
+            StartCoroutine(Dead());
         }
         StopCoroutine(Invincible());
         StartCoroutine(Invincible());
@@ -417,27 +418,20 @@ public class PlayerScript : MonoBehaviour
         }
         ChangeHealth(healValue);
     }
-    void Dead()
+        
+    IEnumerator Dead()
     {
         impulseSource.GenerateImpulse(1);
         gameObject.layer = LayerMask.NameToLayer("Invincible");
-        StopCoroutine(LoadScene());
-        StartCoroutine(LoadScene());
-        EventCenter.Instance.Invoke(EventName.dead);
-    }
-    IEnumerator LoadScene()
-    {
-        var async = SceneManager.LoadSceneAsync(0);
-        async.allowSceneActivation = false;
+        EventCenter.Instance.Invoke(EventName.dead);  
         float deadTime = 2;
         float deadTimer = 0;
-        while (!async.isDone && deadTimer<deadTime)
+        while (deadTimer<deadTime)
         {
             deadTimer+=Time.deltaTime;
             m_skeleton.skeleton.SetColor(new Color(1, 1, 1, Mathf.Lerp(1, 0, deadTimer / deadTime)));
             yield return null;
         }
-        async.allowSceneActivation = true;
     }
     
 }
