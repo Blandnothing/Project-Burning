@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u4E3B\u62FC\u56FE3"
   m_EditorClassIdentifier: 
   id: 3
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: a1382070bcc67b441badbe1cdd57fa7d, type: 2}
   p_height: 5
   p_width: 5
   puzzlePieces: 0101011111001110001001110
