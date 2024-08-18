@@ -11,10 +11,11 @@ public class AttackTriggerScript : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Vector2 v=other.transform.position-transform.position;     //冲击效果
+            Vector2 v=other.transform.position-PlayerScript.Instance.transform.position;     //冲击效果
             v.Normalize();
-            other.GetComponent<Rigidbody2D>().velocity = v*atkItemBack;
+            
             other.GetComponent<Enemy>().GetHit(v, atk);
+            other.GetComponent<Rigidbody2D>().velocity = v * atkItemBack;
         }
     }
 }

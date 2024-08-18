@@ -42,7 +42,6 @@ public class WalkEnemy : Enemy
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log(1);
             collision.GetComponent<Rigidbody2D>().velocity = (direction ? 1 : -1) *Vector2.right*atkBack;
             collision.GetComponent<PlayerScript>().GetHit(transform.position - collision.transform.position, atkPower);
         }

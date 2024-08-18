@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "game jam\u5C0F\u4EBA_Material"
-  m_Shader: {fileID: 4800000, guid: 45495790b394f894a967dbf44489b57b, type: 3}
+  m_Name: skeleton_Material
+  m_Shader: {fileID: 4800000, guid: 1e8a610c9e01c3648bac42585e5fc676, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _USE8NEIGHBOURHOOD_ON
@@ -22,13 +22,12 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 530a408321e7c4b4fad46c8e2780104d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 356195ff9e3934e4ba5b728a6e6960a1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Cutoff: 0.1
-    - _FillPhase: 0
     - _OutlineMipLevel: 0
     - _OutlineReferenceTexWidth: 1024
     - _OutlineSmoothness: 1
@@ -39,6 +38,5 @@ Material:
     - _ThresholdEnd: 0.25
     - _Use8Neighbourhood: 1
     m_Colors:
-    - _FillColor: {r: 1, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []

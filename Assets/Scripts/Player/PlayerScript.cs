@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using Spine.Unity;
 using System.Collections.Generic;
+using Spine;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class PlayerScript : MonoBehaviour
@@ -169,6 +170,20 @@ public class PlayerScript : MonoBehaviour
     {
         isGround = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.7f, 0.1f), 0, groundLayer).Length!=0;
         isFalling = m_body2d.velocity.y < -0.01;
+
+        if (m_body2d.velocity.y<0.1f && m_body2d.velocity.y>-0.1f)
+        {
+            m_body2d.gravityScale = 5;
+        }
+        else if (m_body2d.velocity.y<=0.1f)
+        {
+            m_body2d.gravityScale = 3;
+        }
+        else
+        {
+            m_body2d.gravityScale = 1.5f;
+        }
+
         GroundMovement();
         Jump();
 
@@ -363,7 +378,7 @@ public class PlayerScript : MonoBehaviour
         prePos=transform.position;
     }
     public void GetHit(Vector2 direction, float attackPower)
-    {
+    {        
         if (direction.x >= 0)
         {
             GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
@@ -373,6 +388,7 @@ public class PlayerScript : MonoBehaviour
             GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
         }
 
+        impulseSource.GenerateImpulse(0.5f);
         ChangeHealth(-attackPower);
 
         if (currentHealth <= 0)
@@ -403,7 +419,25 @@ public class PlayerScript : MonoBehaviour
     }
     void Dead()
     {
-        SceneManager.LoadScene(0);
+        impulseSource.GenerateImpulse(1);
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        StopCoroutine(LoadScene());
+        StartCoroutine(LoadScene());
+        EventCenter.Instance.Invoke(EventName.dead);
+    }
+    IEnumerator LoadScene()
+    {
+        var async = SceneManager.LoadSceneAsync(0);
+        async.allowSceneActivation = false;
+        float deadTime = 2;
+        float deadTimer = 0;
+        while (!async.isDone && deadTimer<deadTime)
+        {
+            deadTimer+=Time.deltaTime;
+            m_skeleton.skeleton.SetColor(new Color(1, 1, 1, Mathf.Lerp(1, 0, deadTimer / deadTime)));
+            yield return null;
+        }
+        async.allowSceneActivation = true;
     }
     
 }

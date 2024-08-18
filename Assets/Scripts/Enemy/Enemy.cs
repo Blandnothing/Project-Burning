@@ -82,9 +82,11 @@ public class Enemy : MonoBehaviour
     {
         gameObject.layer = LayerMask.NameToLayer("Invincible");
         GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0.5f);
+        skeletonAnimation.timeScale = 0;
         isInvicible = true;
         yield return new WaitForSeconds(invincibleTime);
         isInvicible = false;
+        skeletonAnimation.timeScale = 1;
         GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0);
         gameObject.layer = LayerMask.NameToLayer("Enemy");
     }

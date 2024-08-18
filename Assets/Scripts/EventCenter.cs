@@ -83,4 +83,5 @@ public class EventInfo<T> : IEventInfo
 public static class EventName
 {
     public const string playerMoveX=nameof(playerMoveX);
+    public const string dead=nameof(dead);
 }
