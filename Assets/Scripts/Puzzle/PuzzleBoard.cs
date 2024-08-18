@@ -24,11 +24,7 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
         GetComponent<RectTransform>().GetWorldCorners(worldCorners);
         basePos = worldCorners[0];
         slotSize = (worldCorners[2].y - worldCorners[0].y) / height;
-    }
-
-    // Update is called once per frame
-    void Awake()
-    {
+        
         foreach (var (piece, pos) in pieces)
         {
             var corners = new Vector3[4];
