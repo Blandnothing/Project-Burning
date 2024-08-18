@@ -10,6 +10,7 @@ public class WalkEnemy : Enemy
     float rightPoint;
     [Header("初始方向，右为true,左为false")]public bool direction;
     public float atkPower;
+    public float atkBack;
     private void Start()
     {
         leftPoint = transform.Find("Left").position.x;
@@ -21,7 +22,7 @@ public class WalkEnemy : Enemy
     }
     private void Update()
     {
-        if(isDead) return;
+        if(isDead || isInvicible) return;
         ChangeDirection();
         Move();
     }
@@ -41,6 +42,8 @@ public class WalkEnemy : Enemy
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.Log(1);
+            collision.GetComponent<Rigidbody2D>().velocity = (direction ? 1 : -1) *Vector2.right*atkBack;
             collision.GetComponent<PlayerScript>().GetHit(transform.position - collision.transform.position, atkPower);
         }
     }

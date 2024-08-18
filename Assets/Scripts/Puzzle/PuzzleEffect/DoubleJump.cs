@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[CreateAssetMenu(fileName = "DoubleJump Buff", menuName = "Puzzle/Puzzle Effect/Buff/DoubleJump")]
 
 public class DoubleJump : Buff
 {

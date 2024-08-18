@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
 public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public int id;
-    PuzzleEffect effect;
-    public int p_height = 5, p_width = 5;
     private Vector3 base_scale;
-    public List<Vector2Int> connectedPieces;
+    public PuzzleInfo info;
     private RectTransform rectTrans;
     [SerializeField] private Canvas canvas;
 
@@ -24,9 +22,9 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         rectTrans = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
-        for (int i = 0; i < p_height; i++)
-            for (int j = 0; j < p_width; j++)
-                connectedPieces.Add(new Vector2Int(i, j));
+        for (int i = 0; i < info.p_height; i++)
+            for (int j = 0; j < info.p_width; j++)
+                info.connectedPieces.Add(new Vector2Int(i, j));
         base_scale = rectTrans.localScale;
         // rectTrans.localScale = base_scale * Mathf.Min(1.0f * height / PuzzleData.layoutSize, 1);
         startPos = rectTrans.anchoredPosition;

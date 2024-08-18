@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PuzzleEffect
+
+[System.Serializable]
+public class PuzzleEffect:ScriptableObject
 {
 
 }

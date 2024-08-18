@@ -16,9 +16,11 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] float invincibleTime;
     [SerializeField] float deadTime = 1;
+    [Header("µÙ¬‰ŒÔ¡–±Ì")] [SerializeField] List<GameObject> drops = new();
     protected Rigidbody2D rb2d;
     protected SkeletonAnimation skeletonAnimation;
     protected bool isDead;
+    protected bool isInvicible;
 
     private void Awake()
     {
@@ -80,12 +82,22 @@ public class Enemy : MonoBehaviour
     {
         gameObject.layer = LayerMask.NameToLayer("Invincible");
         GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0.5f);
+        isInvicible = true;
         yield return new WaitForSeconds(invincibleTime);
+        isInvicible = false;
         GetComponent<MeshRenderer>().material.SetFloat("_FillPhase", 0);
         gameObject.layer = LayerMask.NameToLayer("Enemy");
     }
     protected virtual void OnDestroy()
     {
+        if (!gameObject.scene.isLoaded)
+        {
+            return;
+        }
 
+        foreach (var item in drops)
+        {
+            Instantiate(item,transform.position,Quaternion.identity);
+        }
     }
 }

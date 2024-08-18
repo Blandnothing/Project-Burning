@@ -15,10 +15,10 @@ public class InventoryManager
             return instance; 
         }
     }
-    public List<PuzzlePiece> puzzleDictionary;  //�洢ƴͼ���ֵ䣬value��int������Ϊռλ��
+    public Dictionary<int,PuzzleInfo> puzzleDictionary;  //�洢ƴͼ���ֵ䣬value��int������Ϊռλ��
     public InventoryManager()
     {
-        List<PuzzlePiece> localInventoryData =SaveAndLoad.LoadInventoryData<List<PuzzlePiece>>(LocalPath.inventoryData);     //��ȡ���ش洢�ı������ݳ�ʼ��
+        Dictionary<int, PuzzleInfo> localInventoryData =SaveAndLoad.LoadInventoryData<Dictionary<int, PuzzleInfo>>(LocalPath.inventoryData);     //��ȡ���ش洢�ı������ݳ�ʼ��
         if (localInventoryData==null)
         {
             puzzleDictionary = new();
@@ -27,14 +27,18 @@ public class InventoryManager
         {
             puzzleDictionary=localInventoryData;
         }
+        foreach (var item in puzzleDictionary)
+        {
+            //Debug.Log(item);
+        }
     }
-    public void AddObject(PuzzlePiece value)
+    public void AddObject(PuzzleInfo value)
     {
-        puzzleDictionary.Add(value);
+        puzzleDictionary[value.id] = value;
         SaveInventoryData();
     }
     public void SaveInventoryData()
     {
-        SaveAndLoad.SaveInventoryData<List<PuzzlePiece>>(LocalPath.inventoryData,puzzleDictionary);
+        SaveAndLoad.SaveInventoryData<Dictionary<int, PuzzleInfo>>(LocalPath.inventoryData,puzzleDictionary);
     }
 }

@@ -15,7 +15,7 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
     private int[,] board;
     private Vector3 basePos;
     public Dictionary<PuzzlePiece, Vector2Int> pieces = new Dictionary<PuzzlePiece, Vector2Int>();
-
+    public KeyCode key;
 
     void Start()
     {
@@ -47,8 +47,8 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
     public void removePiece(PuzzlePiece piece)
     {
         var pos = pieces[piece];
-        for (int i = 0; i < piece.connectedPieces.Count; i++)
-            board[pos.y + piece.connectedPieces[i].y, pos.x + piece.connectedPieces[i].x] = 0;
+        for (int i = 0; i < piece.info.connectedPieces.Count; i++)
+            board[pos.y + piece.info.connectedPieces[i].y, pos.x + piece.info.connectedPieces[i].x] = 0;
         pieces.Remove(piece);
     }
 
@@ -61,14 +61,20 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
         var x_point = Mathf.RoundToInt(pos.x / slotSize);
         var y_point = Mathf.RoundToInt(pos.y / slotSize);
         var piece = eventData.pointerDrag.GetComponent<PuzzlePiece>();
-        if (TryPut(x_point, y_point, piece.connectedPieces))
+        if (TryPut(x_point, y_point, piece.info.connectedPieces))
         {
             pieces[piece] = new Vector2Int(x_point, y_point);
             Debug.Log(x_point + " " + y_point);
             piece.moveTo(this);
             transform.position = new Vector3(x_point * slotSize, y_point * slotSize)
                                  + (transform.position - corners[0]) + basePos;
+
+            EnablePuzzle(piece);
         }
         else Debug.Log("fail");
+    }
+    public void EnablePuzzle(PuzzlePiece piece)
+    {
+        PuzzleEffectManager.Instance.AddPuzzle(piece.info.effect, key);
     }
 }

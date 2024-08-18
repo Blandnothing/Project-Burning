@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[CreateAssetMenu(fileName = "Heal Skill", menuName = "Puzzle/Puzzle Effect/Skill/Heal")]
 
 public class Heal : Skill
 {

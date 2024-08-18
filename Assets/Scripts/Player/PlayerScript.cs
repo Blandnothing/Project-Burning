@@ -106,8 +106,8 @@ public class PlayerScript : MonoBehaviour
         
     }
     void Start()
-    {
-        dicSkill[KeyCode.Mouse0] = new SkillInfo(SkillInfo.SkillType.atk,"攻击", attackPower, attackBack);
+    {       
+        InitState();
         currentHealth = maxHealth;
         if (sliderHealth==null)
         {
@@ -120,6 +120,13 @@ public class PlayerScript : MonoBehaviour
         }
         sliderHealth.value = currentHealth / maxHealth;
         textHealth.text = currentHealth.ToString() + "/" + maxHealth.ToString();
+    }
+    /// <summary>
+    /// 初始化玩家状态，开始时或重新加载拼图效果时使用
+    /// </summary>
+    public void InitState()   
+    {
+        dicSkill[KeyCode.Mouse0] = new SkillInfo(SkillInfo.SkillType.atk, "攻击", attackPower, attackBack);
     }
 
     void Update()

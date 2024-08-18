@@ -8,23 +8,20 @@ public class SaveAndLoad
 {
     public static void SaveInventoryData<T>(string path, T data)
     {
-        if (!File.Exists(Application.persistentDataPath))
-        {
-            System.IO.Directory.CreateDirectory(Application.persistentDataPath);
-        }
         if (!File.Exists(Application.persistentDataPath + string.Format("/SaveData")))
         {
             System.IO.Directory.CreateDirectory(Application.persistentDataPath + string.Format("/SaveData"));
         }
         string jsonData = JsonConvert.SerializeObject(data,new JsonSerializerSettings{ ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-        File.WriteAllText(Application.persistentDataPath + string.Format("/SaveData",path), jsonData);
+        //Debug.Log(Application.persistentDataPath + string.Format("/SaveData", path));
+        File.WriteAllText(Application.persistentDataPath + string.Format("/SaveData"+path), jsonData);
     }
     public static T LoadInventoryData<T>(string path)
     {
         string truePath = Application.persistentDataPath + "/SaveData"+path;
         if (File.Exists(truePath))
         {
-                string jsonData = File.ReadAllText(path);
+                string jsonData = File.ReadAllText(truePath);
                 T data = JsonConvert.DeserializeObject<T>(jsonData);
                 return data;
 
