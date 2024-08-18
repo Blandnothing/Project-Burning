@@ -9,7 +9,7 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 {
     private Vector3 base_scale;
     public PuzzleInfo info;
-    private RectTransform rectTrans;
+    public RectTransform rectTrans;
     [SerializeField] private Canvas canvas;
 
     private CanvasGroup canvasGroup;
@@ -22,9 +22,7 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         rectTrans = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
-        for (int i = 0; i < info.p_height; i++)
-            for (int j = 0; j < info.p_width; j++)
-                info.connectedPieces.Add(new Vector2Int(i, j));
+        info.Init();
         base_scale = rectTrans.localScale;
         // rectTrans.localScale = base_scale * Mathf.Min(1.0f * height / PuzzleData.layoutSize, 1);
         startPos = rectTrans.anchoredPosition;
@@ -48,6 +46,7 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         canvasGroup.blocksRaycasts = true;
         if (father == null)
             moveBack();
+        
     }
 
     public void OnDrag(PointerEventData eventData)
