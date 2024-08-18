@@ -10,7 +10,7 @@ public class PieceBoard : MonoBehaviour
             if (InventoryManager.Instance.puzzleDictionary.ContainsKey(child.GetComponent<PuzzlePiece>().info.id))
                 child.gameObject.SetActive(true);
             else
-                child.gameObject.SetActive(true);
+                child.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
