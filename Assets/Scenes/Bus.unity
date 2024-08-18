@@ -557,6 +557,7 @@ GameObject:
   - component: {fileID: 1002671208}
   - component: {fileID: 1002671207}
   - component: {fileID: 1002671209}
+  - component: {fileID: 1002671210}
   m_Layer: 5
   m_Name: Puzzle
   m_TagString: Untagged
@@ -666,18 +667,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1260920730}
-        m_TargetAssemblyTypeName: OptionManager, Assembly-CSharp
-        m_MethodName: AddScene
-        m_Mode: 3
+      - m_Target: {fileID: 1002671210}
+        m_TargetAssemblyTypeName: PuzzleSceneButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1002671210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002671205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b09cbe0d40ae8a4c9eec331afa97e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneIndex: 3
+  HideObjects:
+  - {fileID: 1339707409}
+  - {fileID: 1983261911}
 --- !u!1 &1260920725
 GameObject:
   m_ObjectHideFlags: 0
