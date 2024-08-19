@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903cc32488d52f8479dd88f83ffc3440, type: 3}
   m_Name: "\u4E3B\u62FC\u56FE3"
   m_EditorClassIdentifier: 
-  id: 3
-  effect: {fileID: 11400000, guid: a1382070bcc67b441badbe1cdd57fa7d, type: 2}
+  id: 2
+  effect: {fileID: 11400000, guid: 1fe46caf57663084c860b2b8e88e5729, type: 2}
   p_height: 5
   p_width: 5
   puzzlePieces: 0101011111001110001001110
