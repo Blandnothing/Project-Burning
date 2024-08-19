@@ -222,17 +222,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particle UI
       objectReference: {fileID: 0}
-    - target: {fileID: 3710153196188142462, guid: 973c933a02e66304aa5d3fd9719c352f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 973c933a02e66304aa5d3fd9719c352f, type: 3}
---- !u!224 &446195252 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6383615913945765627, guid: aacb876ab28fc0c4b87c12e7b7138718, type: 3}
-  m_PrefabInstance: {fileID: 6383615914508806350}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &478843643
 GameObject:
   m_ObjectHideFlags: 0
@@ -5784,6 +5775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa15e89d608e94e4bb22e239bd9dfa5e, type: 3}
+<<<<<<< HEAD
 --- !u!1001 &3140951504724280578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5885,6 +5877,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9739a5372fa3349a9cec398c8f4363, type: 3}
+=======
+>>>>>>> 2c1f637 (复原现场（)
 --- !u!1001 &3691722060132123679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6218,6 +6212,10 @@ PrefabInstance:
     - target: {fileID: 6383615913945765631, guid: aacb876ab28fc0c4b87c12e7b7138718, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383615914587631980, guid: aacb876ab28fc0c4b87c12e7b7138718, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6383615914587631980, guid: aacb876ab28fc0c4b87c12e7b7138718, type: 3}
       propertyPath: m_AnchorMax.y

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99addf72c0935cf4bad05bddbfb72671, type: 3}
-  m_Name: LightWave Skill
+  m_Script: {fileID: 11500000, guid: 121fbf36c278cb84b8788b31e7ae28ea, type: 3}
+  m_Name: Light Wave
   m_EditorClassIdentifier: 
-  vfx: {fileID: 697241143381720120, guid: 2231c9886815f4241901ae524d9cdc74, type: 3}
+  vfx: {fileID: 8501390898782901026, guid: 2231c9886815f4241901ae524d9cdc74, type: 3}
   attackPower: 50
   atkBack: 0

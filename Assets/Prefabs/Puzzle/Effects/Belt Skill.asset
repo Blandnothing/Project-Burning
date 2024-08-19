@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121fbf36c278cb84b8788b31e7ae28ea, type: 3}
   m_Name: Belt Skill
   m_EditorClassIdentifier: 
-  vfx: {fileID: 4937017141299588548, guid: 9cad2d8e456456f49a8cb506b24ffd9c, type: 3}
+  vfx: {fileID: 6254492396982848006, guid: 9cad2d8e456456f49a8cb506b24ffd9c, type: 3}
   attackPower: 100
-  atkBack: 5
+  atkBack: 20
