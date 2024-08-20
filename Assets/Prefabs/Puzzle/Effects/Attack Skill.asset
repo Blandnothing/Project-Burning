@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4122300a9543f6a448903ad3a65333a8, type: 3}
+  m_Name: Attack Skill
+  m_EditorClassIdentifier: 
+  vfx: {fileID: 7307297399652794637, guid: 9353e09d8f159584e932dc769b688216, type: 3}
+  attackPower: 50
+  atkBack: 10
