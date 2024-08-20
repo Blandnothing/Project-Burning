@@ -53,7 +53,7 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
         for (int i = 0; i < piece.info.connectedPieces.Count; i++)
             board[pos.y + piece.info.connectedPieces[i].y, pos.x + piece.info.connectedPieces[i].x] = 0;
         pieces.Remove(piece);
-        RemovePuzzle(piece);
+        DisablePuzzle(piece);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -82,7 +82,7 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
     {
         PuzzleEffectManager.Instance.AddPuzzle(piece.info.effect, key);
     }
-    public void RemovePuzzle(PuzzlePiece piece)
+    public void DisablePuzzle(PuzzlePiece piece)
     {
         PuzzleEffectManager.Instance.RemovePuzzle(piece.info.effect, key);
     }

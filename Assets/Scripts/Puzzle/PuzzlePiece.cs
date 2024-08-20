@@ -14,9 +14,11 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     private CanvasGroup canvasGroup;
 
-    private Vector3 startPos;
-    private PuzzleBoard father = null;
-    Transform group;
+    // private Vector3 startPos;
+
+    [SerializeField] private PuzzleBoard father = null;
+
+    [SerializeField] private Transform group;
 
     void Start()
     {
@@ -26,7 +28,7 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
         info.Init();
         base_scale = rectTrans.localScale;
-        startPos = rectTrans.anchoredPosition;
+        // startPos = rectTrans.anchoredPosition;
     }
 
     public void OnPointerDown(PointerEventData eventData)
