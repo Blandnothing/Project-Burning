@@ -8,17 +8,20 @@ public class PuzzleSceneButton : MonoBehaviour
     public int sceneIndex = 3;
     bool active = false;
     public List<GameObject> HideObjects = new List<GameObject>();
+    [SerializeField]  GameObject eventSystem;
     
     public void OnClick()
     {
         if (!active)
         {
+            eventSystem.SetActive(false);
             StartCoroutine(AddScene(sceneIndex));
             foreach (var obj in HideObjects)
                 obj.SetActive(false);
         }
         else
         {
+            eventSystem.SetActive(true);
             StartCoroutine(RemoveScene());
             foreach (var obj in HideObjects)
                 obj.SetActive(true);
