@@ -57,6 +57,7 @@ public class PlayerScript : MonoBehaviour
     public float attackBehind=0.2f;                //攻击后的冷却时间
     BoxCollider2D atkCol;        //攻击碰撞体
     [SerializeField] AttackTriggerScript atkTrigger;
+    [SerializeField] Skill attackInfo;  //普攻信息
     Coroutine curAtkC;  //当前攻击协程
 
     public Dictionary<KeyCode, SkillInfo> dicSkill = new();
@@ -129,7 +130,7 @@ public class PlayerScript : MonoBehaviour
     /// </summary>
     public void InitState()   
     {
-        dicSkill[KeyCode.Mouse0] = new SkillInfo(SkillInfo.SkillType.atk, "攻击", attackPower, attackBack);
+        attackInfo.AddSkill(KeyCode.Mouse0);
     }
 
     void Update()
@@ -270,7 +271,11 @@ public class PlayerScript : MonoBehaviour
             {
                 if (s.Data.Name == "skill")
                 {
-                    GenerateVfx(vfx);
+                    GenerateVfx(vfx,5);
+                }
+                else if (s.Data.Name=="attack")
+                {
+                    GenerateVfx(vfx, 3);
                 }
             };
         }
@@ -314,9 +319,9 @@ public class PlayerScript : MonoBehaviour
 
         return track;
     }
-    void GenerateVfx(GameObject vfx)
+    void GenerateVfx(GameObject vfx,float offset)
     {
-        GameObject v = Instantiate(vfx, new Vector2(transform.position.x + m_skeleton.skeleton.ScaleX * 5, transform.position.y), Quaternion.identity);
+        GameObject v = Instantiate(vfx, new Vector2(transform.position.x + m_skeleton.skeleton.ScaleX * offset, transform.position.y), Quaternion.identity);
         v.GetComponent<Flyable>().direction = new Vector2(m_skeleton.skeleton.ScaleX, 0);
         v.GetComponent<SpriteRenderer>().flipX = m_skeleton.skeleton.ScaleX<0;
     }
