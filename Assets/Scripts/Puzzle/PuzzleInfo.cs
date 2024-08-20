@@ -8,6 +8,7 @@ public class PuzzleInfo : ScriptableObject
     public int id;
     public PuzzleEffect effect;
     public int p_height = 5, p_width = 5;
+    public float gridSize = 256f / 5;
     public string puzzlePieces;
     public List<Vector2Int> connectedPieces;
 

@@ -20,10 +20,11 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     [SerializeField] private Transform group;
 
-    void Start()
+    void Awake()
     {
         group = transform.parent;
         rectTrans = GetComponent<RectTransform>();
+        rectTrans.sizeDelta = new Vector2(info.gridSize * info.p_width, info.gridSize * info.p_height);
         canvasGroup = GetComponent<CanvasGroup>();
         GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
         info.Init();
@@ -42,7 +43,7 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         canvasGroup.blocksRaycasts = false;
         rectTrans.SetAsLastSibling();
         if (father != null)
-            father.removePiece(this);
+            father.RemovePiece(this);
         father = null;
     }
 
@@ -67,6 +68,8 @@ public class PuzzlePiece : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public void moveTo(PuzzleBoard _father)
     {
+        transform.SetParent(canvas.transform);
+        rectTrans.localScale = Vector3.one;
         father = _father;
     }
 }

@@ -21,10 +21,10 @@ public class PuzzleSceneButton : MonoBehaviour
         }
         else
         {
-            eventSystem.SetActive(true);
             StartCoroutine(RemoveScene());
             foreach (var obj in HideObjects)
                 obj.SetActive(true);
+            eventSystem.SetActive(true);
         }
         active = !active;
     }
