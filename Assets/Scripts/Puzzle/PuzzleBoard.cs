@@ -9,13 +9,27 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
     public int width = 5;
     public int height = 5;
     // public GameObject slots;
-    public Sprite[] puzzleSprites;
-    // Start is called before the first frame update
     private float slotSize;
     private int[,] board;
     private Vector3 basePos;
-    public Dictionary<PuzzlePiece, Vector2Int> pieces = new Dictionary<PuzzlePiece, Vector2Int>();
+    private static Dictionary<KeyCode, Dictionary<string, Vector2Int>> _pieceData;
+    public static Dictionary<KeyCode, Dictionary<string, Vector2Int>> pieceData
+    {
+        get
+        {
+            if (_pieceData == null)
+                _pieceData = new Dictionary<KeyCode, Dictionary<string, Vector2Int>>();
+            return _pieceData;
+        }
+    }
+    private Dictionary<string, Vector2Int> pieces;
     public KeyCode key;
+
+    void Awake()
+    {
+        if (!pieceData.ContainsKey(key)) pieceData[key] = new Dictionary<string, Vector2Int>();
+        pieces = pieceData[key];
+    }
 
     void Start()
     {
@@ -24,57 +38,57 @@ public class PuzzleBoard : MonoBehaviour, IDropHandler
         GetComponent<RectTransform>().GetWorldCorners(worldCorners);
         basePos = worldCorners[0];
         slotSize = (worldCorners[2].y - worldCorners[0].y) / height;
-        
-        foreach (var (piece, pos) in pieces)
-        {
-            var corners = new Vector3[4];
-            piece.rectTrans.GetWorldCorners(corners);
-            piece.rectTrans.position = new Vector3(pos.x * slotSize, pos.y * slotSize)
-                + piece.rectTrans.position - corners[0] + basePos;
-            piece.moveTo(this);
-        }
+        foreach (var (name, pos) in pieces)
+            PutPiece(pos.x, pos.y, GameObject.Find(name).GetComponent<PuzzlePiece>());
     }
 
-    private bool TryPut(int x, int y, List<Vector2Int> connectedPieces)
+    public void PutPiece(int x, int y, PuzzlePiece piece)
     {
-        for (int i = 0; i < connectedPieces.Count; i++)
-            if (y + connectedPieces[i].y >= height || x + connectedPieces[i].x >= width
-                || y + connectedPieces[i].y < 0 || x + connectedPieces[i].x < 0
-                || board[y + connectedPieces[i].y, x + connectedPieces[i].x] != 0)
+        piece.moveTo(this);
+        var corners = new Vector3[4];
+        piece.rectTrans.GetWorldCorners(corners);
+        piece.rectTrans.position = new Vector3(x * slotSize, y * slotSize)
+                             + (piece.rectTrans.position - corners[0]) + basePos;
+        for (int i = 0; i < piece.info.connectedPieces.Count; i++)
+            board[y + piece.info.connectedPieces[i].y, x + piece.info.connectedPieces[i].x] = 1;
+    }
+
+    private bool TryPut(int x, int y, PuzzlePiece piece)
+    {
+        for (int i = 0; i < piece.info.connectedPieces.Count; i++)
+            if (y + piece.info.connectedPieces[i].y >= height || x + piece.info.connectedPieces[i].x >= width
+                || y + piece.info.connectedPieces[i].y < 0 || x + piece.info.connectedPieces[i].x < 0
+                || board[y + piece.info.connectedPieces[i].y, x + piece.info.connectedPieces[i].x] != 0)
                 return false;
-        for (int i = 0; i < connectedPieces.Count; i++)
-            board[y + connectedPieces[i].y, x + connectedPieces[i].x] = 1;
+        for (int i = 0; i < piece.info.connectedPieces.Count; i++)
+            board[y + piece.info.connectedPieces[i].y, x + piece.info.connectedPieces[i].x] = 1;
         return true;
     }
 
-    public void removePiece(PuzzlePiece piece)
+    public void RemovePiece(PuzzlePiece piece)
     {
-        var pos = pieces[piece];
+        var pos = pieces[piece.name];
         for (int i = 0; i < piece.info.connectedPieces.Count; i++)
             board[pos.y + piece.info.connectedPieces[i].y, pos.x + piece.info.connectedPieces[i].x] = 0;
-        pieces.Remove(piece);
+        pieces.Remove(piece.name);
         DisablePuzzle(piece);
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop");
-        var transform = eventData.pointerDrag.GetComponent<RectTransform>();
+        var pieceTrans = eventData.pointerDrag.GetComponent<RectTransform>();
         var corners = new Vector3[4];
-        transform.GetWorldCorners(corners);
+        pieceTrans.GetWorldCorners(corners);
         var pos = corners[0] - basePos;
         var x_point = Mathf.RoundToInt(pos.x / slotSize);
         var y_point = Mathf.RoundToInt(pos.y / slotSize);
         var piece = eventData.pointerDrag.GetComponent<PuzzlePiece>();
-        if (TryPut(x_point, y_point, piece.info.connectedPieces))
+        if (TryPut(x_point, y_point, piece))
         {
-            pieces[piece] = new Vector2Int(x_point, y_point);
-            Debug.Log(x_point + " " + y_point);
-            piece.moveTo(this);
-            transform.position = new Vector3(x_point * slotSize, y_point * slotSize)
-                                 + (transform.position - corners[0]) + basePos;
-
-           EnablePuzzle(piece);
+            PutPiece(x_point, y_point, piece);
+            pieces[piece.name] = new Vector2Int(x_point, y_point);
+            EnablePuzzle(piece);
         }
         else Debug.Log("fail");
     }
