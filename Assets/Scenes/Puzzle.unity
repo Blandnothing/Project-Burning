@@ -425,6 +425,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 803e7faa360427147b9f2a2a59b11dcb, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &385815148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +544,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 9d921b8a4df4c1d4aa62c25946ed58f0, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &429427040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,6 +651,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 31eb888f2aa2150478f99ef7c88d55f5, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &464027921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,6 +746,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 9b9070f61b807ce4d861feddd2593ebb, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &568103017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,6 +865,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 291b52263ead8a14cbdb5f8c7778e03b, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &806731581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1169,7 +1179,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1536902147}
   - component: {fileID: 1536902146}
-  - component: {fileID: 1536902145}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1177,14 +1186,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1536902145
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536902144}
-  m_Enabled: 1
 --- !u!20 &1536902146
 Camera:
   m_ObjectHideFlags: 0
@@ -1298,6 +1299,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 48becfc1b2602014f806ba3d5fd6940a, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &1571837861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,6 +1644,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: b162d14e11941e140846c6a9ce38e4cf, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &1713377962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1941,6 +1946,8 @@ MonoBehaviour:
   info: {fileID: 11400000, guid: 96334022c297d2c4f8d3f5bea049a18e, type: 2}
   rectTrans: {fileID: 0}
   canvas: {fileID: 1778238696}
+  father: {fileID: 0}
+  group: {fileID: 0}
 --- !u!114 &2135621941
 MonoBehaviour:
   m_ObjectHideFlags: 0
