@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Spine.Unity;
 using System.Collections.Generic;
 using Spine;
+using UnityEngine.Playables;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class PlayerScript : MonoBehaviour
@@ -32,8 +33,10 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     private float inputX;
     private float graceTimer;
-    [SerializeField] float graceTime;
-    [JsonProperty] [SerializeField] float m_speed = 4.0f;
+    [SerializeField,Header("土狼时间")] float graceTime;    
+    [SerializeField,Header("最大速度")] float m_speed = 4.0f;
+    [SerializeField, Header("加速到最大速度时间")] float accelerateTime = 0.1f;
+    [SerializeField, Header("减速时间")] float decelerateTIme = 0.05f;
     Vector2 prePos;       //角色上一帧的位置
     //跳跃
     [JsonProperty] public int maxJumpCount = 1;
@@ -41,7 +44,13 @@ public class PlayerScript : MonoBehaviour
     private bool jumpPressed;
     private bool isJump;
     bool isFalling;       //是否下落
-    [SerializeField] float m_jumpForce = 7.5f;
+    [SerializeField,Header("跳跃的最大高度")] float jumpMax = 2.5f;
+    [SerializeField, Header("跳跃的最小高度")] float jumpMin = 0.5f;
+    [SerializeField,Header("跳跃速度")] float jumpSpeed = 18;
+    [SerializeField,Header("跳跃高度超过跳跃最大高度时的降落速度")] float slowFallSpeed=100f;
+    [SerializeField,Header("跳跃高度小于跳跃最大高度时的降落速度")] float FastFallSpeed=200f;
+    [SerializeField,Header("落下阶段的降落加速度")] float fallSpeed=150f;
+    [SerializeField,Header("落下阶段的最大降落速度")] float fallMaxSpeed=24;
     //生命
     [JsonProperty] public float maxHealth=100;
     [JsonProperty] float currentHealth;
@@ -174,19 +183,6 @@ public class PlayerScript : MonoBehaviour
         isGround = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.7f, 0.1f), 0, groundLayer).Length!=0;
         isFalling = m_body2d.velocity.y < -0.01;
 
-        if (m_body2d.velocity.y<0.1f && m_body2d.velocity.y>-0.1f)
-        {
-            m_body2d.gravityScale = 5;
-        }
-        else if (m_body2d.velocity.y<=0.1f)
-        {
-            m_body2d.gravityScale = 3;
-        }
-        else
-        {
-            m_body2d.gravityScale = 1.5f;
-        }
-
         GroundMovement();
         Jump();
 
@@ -194,22 +190,27 @@ public class PlayerScript : MonoBehaviour
     }
     void GroundMovement()
     {
-        if (inputX > 0)
-        {
-            GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
-        }
-
-        else if (inputX < 0)
-        {
-            GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
-        }
+        
         if (isAttack)
         {
             m_body2d.velocity = new Vector2(transform.localScale.x * attackSpeed, m_body2d.velocity.y);
         }
         else
         {
-            m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
+            if (inputX > 0)
+            {
+                GetComponent<SkeletonAnimation>().skeleton.ScaleX = 1;
+                m_body2d.velocity=new Vector2(Mathf.Min(m_speed * Time.fixedDeltaTime / accelerateTime + m_body2d.velocity.x,m_speed), m_body2d.velocity.y);
+            }
+            else if (inputX < 0)
+            {
+                GetComponent<SkeletonAnimation>().skeleton.ScaleX = -1;
+                m_body2d.velocity=new Vector2(Mathf.Max(-m_speed * Time.fixedDeltaTime / accelerateTime + m_body2d.velocity.x,-m_speed), m_body2d.velocity.y);
+            }
+            else
+            {
+                m_body2d.velocity = new Vector2(Mathf.MoveTowards(m_body2d.velocity.x,0,m_speed*Time.fixedDeltaTime/decelerateTIme), m_body2d.velocity.y);
+            }
         }
         
     }
@@ -235,17 +236,70 @@ public class PlayerScript : MonoBehaviour
         {
             SetAnimation("跳跃1",false);        
             isJump = true;
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+            StopCoroutine(IntroJump());
+            StartCoroutine(IntroJump());
             jumpCount--;
             jumpPressed = false;
             graceTimer = 0;
         }else if(jumpPressed && jumpCount > 0 && isJump)       //空中起跳
         {
-            SetAnimation("跳跃1",false);          
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+            SetAnimation("跳跃1",false);
+            StopCoroutine(IntroJump());
+            StartCoroutine(IntroJump());
             jumpCount--;
             jumpPressed = false;
         } 
+    }
+    IEnumerator IntroJump()
+    {
+        float dis = 0;
+        float startJumpPos = transform.position.y;
+        // move up
+        float curJumpMin = jumpMin;
+        float curJumpMax = jumpMax;
+        float curJumpSpeed = jumpSpeed;
+        while (dis <= curJumpMin && m_body2d.velocity.y < curJumpSpeed)
+        {
+            //if (!CheckUpMove())   //返回false说明撞到墙，结束跳跃
+            //{
+            //    Velocity.y = 0;
+            //    isIntroJump = false;
+            //    isMove = true;
+            //    yield break;
+            //}
+            //获取当前角色相对于初始跳跃时的高度
+            dis = transform.position.y - startJumpPos;
+            m_body2d.velocity += 240 * Time.fixedDeltaTime*Vector2.up;
+            yield return new WaitForFixedUpdate();
+        }
+        m_body2d.velocity = new Vector2(m_body2d.velocity.x, curJumpSpeed);
+        while (Input.GetButton("Jump") && dis < curJumpMax)
+        {
+            dis = transform.position.y - startJumpPos;
+            m_body2d.velocity = new Vector2(m_body2d.velocity.x, curJumpSpeed);
+            yield return new WaitForFixedUpdate();
+        }
+        // slow down
+        while (m_body2d.velocity.y > 0)
+        {
+            if (dis > jumpMax)
+            {
+                m_body2d.velocity -= slowFallSpeed * Time.fixedDeltaTime*Vector2.up;
+            }
+            else
+            {
+                m_body2d.velocity -= FastFallSpeed* Time.fixedDeltaTime * Vector2.up;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        // fall down
+        m_body2d.velocity = new Vector2(m_body2d.velocity.x, 0);
+        while (!isGround)
+        {
+            m_body2d.velocity -= fallSpeed * Vector2.up*Time.fixedDeltaTime;
+            m_body2d.velocity = new Vector2(m_body2d.velocity.x, Mathf.Clamp(m_body2d.velocity.y, -fallMaxSpeed, m_body2d.velocity.y));
+            yield return new WaitForFixedUpdate();
+        }
     }
     /// <summary>
     /// 攻击
@@ -403,7 +457,7 @@ public class PlayerScript : MonoBehaviour
     } 
     void MoveTrigger() //角色移动事件
     {
-        EventCenter.Instance.Invoke<float>(EventName.playerMoveX, transform.position.x - prePos.x);
+        EventCenter.Instance.Invoke<Vector2>(EventName.playerMoveX, (Vector2)transform.position - prePos);
         prePos=transform.position;
     }
     public void GetHit(Vector2 direction, float attackPower)

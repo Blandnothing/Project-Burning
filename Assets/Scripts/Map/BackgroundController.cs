@@ -24,25 +24,25 @@ public class BackgroundController : MonoBehaviour
         textUnitSizex = transform.localScale.x * texture.width / sprite.pixelsPerUnit;//ÎÆÀíÍ¼¿í¶È³ýÏñËØ¿í¶È
         beginOffset = transform.position.x - Camera.main.transform.position.x;
 
-        EventCenter.Instance.AddEvent<float>(EventName.playerMoveX, Move);
+        EventCenter.Instance.AddEvent<Vector2>(EventName.playerMoveX, Move);
 
     }
     private void OnDestroy()
     {
-        EventCenter.Instance.RemoveEvent<float>(EventName.playerMoveX,Move);
+        EventCenter.Instance.RemoveEvent<Vector2>(EventName.playerMoveX,Move);
     }
 
     // Update is called once per frame
-    public void Move(float offset)
+    public void Move(Vector2 offset)
     {
-        transform.Translate(offset * speed * Vector2.left);
+        transform.Translate(new Vector2(offset.x * speed,offset.y));
 
         float distance = transform.position.x - beginOffset - Camera.main.transform.position.x;
         if (Mathf.Abs(distance) >textUnitSizex)
         {
             //Æ«ÒÆÁ¿
             float offsetPositionX = Camera.main.transform.position.x + beginOffset + distance%textUnitSizex;
-            offsetPositionX -= offset % (distance % textUnitSizex);
+            offsetPositionX -= offset.x % (distance % textUnitSizex);
             //ÒÆ¶¯±³¾°Í¼
             transform.position = new Vector3(offsetPositionX, transform.position.y);
         }
