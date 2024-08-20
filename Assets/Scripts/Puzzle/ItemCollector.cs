@@ -20,7 +20,6 @@ public class ItemCollector : MonoBehaviour
             if (InventoryManager.Instance.puzzleDictionary.ContainsKey(piece.id))
             {
                 Debug.LogError("Repeat Puzzle don't destroy");
-                return;
             }
             InventoryManager.Instance.AddObject(piece);
             Destroy(gameObject);
